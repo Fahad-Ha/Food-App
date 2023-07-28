@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { NativeBaseProvider, Box } from "native-base";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import RootNavigator from "./components/navigation/index";
+import SideDrawer from "./components/navigation/drawer";
+import ThemeContext, { themeColors } from "./context/ThemeContext";
+import { useContext } from "react";
 
 export default function App() {
+  const themeColors = useContext(ThemeContext); // Access the theme colors using useContext
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeContext.Provider value={themeColors}>
+      <NavigationContainer>
+        <NativeBaseProvider>
+          <StatusBar style="auto" />
+          <SideDrawer />
+        </NativeBaseProvider>
+      </NavigationContainer>
+    </ThemeContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
